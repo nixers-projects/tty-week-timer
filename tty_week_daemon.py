@@ -12,6 +12,13 @@ RUN_EVERY = 10
 TIME_LEFT = 60*60*24*7  # one week
 
 
+def initialize_timer():
+    """
+    fetch the initial time left for the timer online or from a local save
+    """
+    pass
+
+
 def end_all_X_sessions():
     """
     end_all_X_sessions :: void
@@ -32,6 +39,7 @@ def run():
     """
     Main procedure that is ran every X minutes
     """
+    initialize_timer()
     while 1:
         end_all_X_sessions()
         save_time_left(TIME_LEFT)
