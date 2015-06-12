@@ -21,7 +21,7 @@ def initialize_timer():
     try:
         response = WEB_INSTANCE.open(config.API_LOCATION).read()
         return response
-    except, Exception e:
+    except Exception, e:
         print(e)
         return 'WAITING'
 
@@ -59,6 +59,7 @@ def run():
     while time_left == "WAITING":
         time_left = initialize_timer()
     if time_left == "END!":
+        open(config.SAVE_LOCATION,'w').write("END!")
         return
     config.TIME_LEFT = time_left
     while config.TIME_LEFT >= 0:

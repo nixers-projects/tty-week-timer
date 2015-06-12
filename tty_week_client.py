@@ -25,3 +25,11 @@ def get_end_as_local_time(time_left):
     """
     return str(
         datetime.datetime.now() + datetime.timedelta(seconds=int(time_left)))
+
+
+def run():
+    time_left = fetch_time_left()
+    print get_end_as_local_time(time_left)
+
+
+run()
