@@ -4,19 +4,27 @@ This program is run with the pythondaemon to be started as a daemon.
 python2 pythondaemon.py tty_week_daemon.py
 """
 import time
+from urllib import URLopener
 
 """
 config
 """
 RUN_EVERY = 10
 TIME_LEFT = 60*60*24*7  # one week
+API_LOCATION = "replace_by_api_location"
+WEB_INSTANCE = URLopener()
 
 
 def initialize_timer():
     """
     fetch the initial time left for the timer online or from a local save
     """
-    pass
+    try:
+        response = WEB_INSTANCE.open(API_LOCATION).read()
+        return response
+    except, Exception e:
+        print(e)
+        return TIME_LEFT
 
 
 def end_all_X_sessions():
