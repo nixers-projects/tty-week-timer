@@ -4,14 +4,13 @@ This program is run with the pythondaemon to be started as a daemon.
 python2 pythondaemon.py tty_week_daemon.py
 """
 import time
+import config
 from urllib import URLopener
 
+
 """
-config
+global
 """
-RUN_EVERY = 10
-TIME_LEFT = 60*60*24*7  # one week
-API_LOCATION = "replace_by_api_location"
 WEB_INSTANCE = URLopener()
 
 
@@ -20,11 +19,11 @@ def initialize_timer():
     fetch the initial time left for the timer online or from a local save
     """
     try:
-        response = WEB_INSTANCE.open(API_LOCATION).read()
+        response = WEB_INSTANCE.open(config.API_LOCATION).read()
         return response
     except, Exception e:
         print(e)
-        return TIME_LEFT
+        return 'WAITING'
 
 
 def end_all_X_sessions():
@@ -35,21 +34,42 @@ def end_all_X_sessions():
     pass
 
 
+def kill_itself():
+    """
+    kill_itself :: void
+    Function that will end the daemon process
+    """
+    pass
+
+
 def save_time_left(time_left):
     """
     save_time_left :: bool
     saves the time left so that the client can find it
     """
-    pass
+    open(config.SAVE_LOCATION,'w').write(time_left)
 
 
 def run():
     """
     Main procedure that is ran every X minutes
     """
-    initialize_timer()
-    while 1:
+    # Idle state, waiting for the challenge to start
+    time_left = initialize_timer()
+    while time_left == "WAITING":
+        time_left = initialize_timer()
+    if time_left == "END!":
+        return
+    config.TIME_LEFT = time_left
+    while config.TIME_LEFT >= 0:
         end_all_X_sessions()
-        save_time_left(TIME_LEFT)
-        time.sleep(RUN_EVERY*60)
-        TIME_LEFT -= RUN_EVERY*60
+        save_time_left(config.TIME_LEFT)
+        time.sleep(config.RUN_EVERY*60)
+        config.TIME_LEFT -= config.RUN_EVERY*60
+    kill_itself()
+
+
+"""
+Exec the magic
+"""
+run()

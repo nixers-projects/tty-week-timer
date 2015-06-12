@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import datetime
+import config
 
 
 def fetch_time_left():
@@ -9,7 +10,12 @@ def fetch_time_left():
     get the time from the daemon
     maybe nudge it so it fetches it directly
     """
-    pass
+    time_left = config.TIME_LEFT
+    try:
+        time_left = open(config.SAVE_LOCATION).read()
+    except:
+        pass
+    return time_left
 
 
 def get_end_as_local_time(time_left):
