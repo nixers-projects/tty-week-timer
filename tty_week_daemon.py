@@ -23,6 +23,7 @@ def initialize_timer():
         return response
     except Exception, e:
         print(e)
+        open(config.SAVE_LOCATION,'w').write("WAITING")
         return 'WAITING'
 
 
@@ -58,6 +59,7 @@ def run():
     time_left = initialize_timer()
     while time_left == "WAITING":
         time_left = initialize_timer()
+        time.sleep(10)
     if time_left == "END!":
         open(config.SAVE_LOCATION,'w').write("END!")
         return
