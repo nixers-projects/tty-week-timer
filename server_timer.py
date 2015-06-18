@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import time
+import config
 
-LOCATION_OF_TIMER = "root/of/webserver/api"
+LOCATION_OF_TIMER = config.LOCATION_OF_TIMER
 
 while 1:
     time_left = open(LOCATION_OF_TIMER).read()
