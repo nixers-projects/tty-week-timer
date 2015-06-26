@@ -119,7 +119,7 @@ def run():
         save_time_left(config.TIME_LEFT)
         print_debug("Sleeping: "+str(config.RUN_EVERY*60))
         time.sleep(config.RUN_EVERY*60)
-        config.TIME_LEFT =  int(config.TIME_LEFT)-config.RUN_EVERY*60
+        config.TIME_LEFT =  str(int(config.TIME_LEFT)-config.RUN_EVERY*60)
     print_debug("Challenge ended")
     save_time_left("END!")
     print_debug("Killing myself")
